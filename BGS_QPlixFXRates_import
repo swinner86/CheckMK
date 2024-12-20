@@ -1,0 +1,26 @@
+<#
+.SYNOPSIS
+  Script to check QPLIX File Size
+.NOTES
+  Version:        1.0
+  Author:         Simon Kummer
+  Creation Date:  20.12.2024
+  Purpose/Change: Initial script to File of QPLIX Import File (gt than 0kb)
+#>
+
+$date = Get-Date -Format dd.MM.yyyy
+$filepath = "D:\Software\QPLIX\FX-RatesQPLIX\Archive"
+$filename = "UBS_$date.FX22"
+$fullPath = Join-Path $filepath $filename
+$filesize = (Get-Item $fullPath).length
+
+if ((Test-Path $fullPath) -and $filesize -gt 0) 
+{
+    Write-Host 0 "Qplix_Rates_Import" - $filename exists and is not empty
+} 
+elseif ((Test-Path $fullPath) -and $filesize -eq 0) {
+    Write-Host 1 "Qplix_Rates_Import" - $filename exists but is empty
+} 
+else {
+    Write-Host 2 "Qplix_Rates_Import" - $filename does not Exist
+}

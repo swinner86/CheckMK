@@ -1,0 +1,27 @@
+<#
+.SYNOPSIS
+  Script to check QPLIX File Size
+
+.NOTES
+  Version:        1.0
+  Author:         Simon Kummer
+  Creation Date:  20.12.2024
+  Purpose/Change: Initial script to Check FX Rates Date (current Date)
+#>
+
+$date = Get-Date -Format dd.MM.yyyy
+$filepath = "D:\Software\Data Unit AG\Schnittstellen\Import Wechselkurse"
+$filename = "UBS.FX22"
+$fullPath = Join-Path $filepath $filename
+
+if (Test-Path $fullPath) {
+    $fileDate = (Get-Item $fullPath).LastWriteTime.ToString("dd.MM.yyyy")
+    
+    if ($fileDate -eq $date) {
+        Write-Host 0 "FX_Rates_Date" - FX Rates sind aktuell
+    } else {
+        Write-Host 2 "FX_Rates_Date" - FX Rates sind nicht aktuell
+    }
+} else {
+    Write-Host 2 "FX_Rates_Date" - $filename does not Exist
+}
